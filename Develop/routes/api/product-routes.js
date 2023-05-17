@@ -35,7 +35,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // create new product
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   Product.create(req.body)
     .then(product => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -59,7 +59,7 @@ router.post("/", (req, res) => {
 });
 
 // update product
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
@@ -100,11 +100,11 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   // delete one product by its `id` value
 
   try {
-    const nukeProd = ProductTag.destroy({
+    const nukeProd = await ProductTag.destroy({
       where: {
         id: req.params.id
       }
